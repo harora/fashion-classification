@@ -29,7 +29,6 @@ def train(**kwargs):
 		for batch_idx, (data) in enumerate(trainloader.next_batch()):
 			
 			data, target = data[0],data[1]
-			print(data.shape,target)
 			if opt.gpu:
 				data, target = Variable(data.cuda(0)), Variable(target.cuda(0))
 			optimizer.zero_grad()
