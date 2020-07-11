@@ -24,6 +24,7 @@ class DefaultConfig(object):
 	momentum = 0.5
 	max_epochs = 5
 	save_freq = 5
+	steps_per_epoch = 1000
 
 	def parse(self, kwargs):
 		for k, v in kwargs.items():

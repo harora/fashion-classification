@@ -26,17 +26,19 @@ def train(**kwargs):
 	optimizer = optim.SGD(model.parameters(), lr=opt.lr, momentum=opt.momentum)
 
 	for epoch in range(1, opt.max_epochs+1):
-		for batch_idx, (data) in enumerate(trainloader.next_batch()):
+		for batch_idx in range(opt.steps_per_epoch):
+			data = trainloader.next_batch()[0]
+
+			data, label = data[0],data[1]
 			
-			data, target = data[0],data[1]
 			if opt.gpu:
-				data, target = Variable(data.cuda(0)), Variable(target.cuda(0))
+				data, label = Variable(data.cuda(0)), Variable(target.cuda(0))
 			optimizer.zero_grad()
-			output = model(data)
-			loss = criterion(output, target)
+			pred = model(data)
+			loss = criterion(pred, label)
 			loss.backward()
 			optimizer.step()
-		print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, batch_idx * len(data), len(train_loader.dataset),100. * batch_idx / len(train_loader), loss.data[0]))
+		print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, batch_idx, len(trainloader.dataset),100. * batch_idx / len(trainloader), loss.data))
 		if epoch % opt.save_freq == 0:
 			model.save()
 

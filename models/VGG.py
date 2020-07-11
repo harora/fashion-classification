@@ -45,7 +45,7 @@ class VGG16(BasicModule):
                 nn.MaxPool2d(2, 2),
                 )
         self.classifier = nn.Sequential(
-                nn.Linear(int(512*self.out_rows*self.out_rows), 4096),
+                nn.Linear(int(1024*self.out_rows*self.out_rows), 4096),
                 nn.ReLU(inplace=True),
                 nn.Dropout(),
                 nn.Linear(4096, 4096),
