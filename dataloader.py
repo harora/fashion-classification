@@ -1,30 +1,35 @@
 
 import os
 import glob
+import csv
 import torch
 from torch.utils.data import Dataset
-import csv
+
+from utils import load_image
 
 
 class mntdata(Dataset):
-	def __init__(self, data_root, target_csv):
+	def __init__(self,opt):
 		self.samples = []
 
-		data = open(target_csv)
+		data = open(opt.target_path)
 		target_csv = list(csv.reader(data,delimiter=','))
 
 		self.classes = []
 		for row in target_csv:
 			self.classes.append(row[2])
 		self.classes = list(set(self.classes))
+		opt.num_classes = len(self.classes)
 		
-		
-		for row in target_csv:
+		for row in target_csv[1:]:
 			sample_dict= {}
-			sample_dict['input'] = os.path.join(data_root,row[0] + '.jpg')
-			sample_dict['target'] = int(self.classes.index(row[2]))
-			if os.path.isfile(sample_dict['input']):
-				self.samples.append(sample_dict)
+			input_path = os.path.join(opt.data_root,row[0] + '.jpg')
+			target = int(self.classes.index(row[2]))
+
+			
+			if os.path.isfile(input_path):
+				image = load_image(input_path)
+				self.samples.append([[image,target]])
 
 			
 

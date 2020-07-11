@@ -5,17 +5,17 @@ from torchvision import transforms
 class DefaultConfig(object):
 
 	dataset_name = 'mnt'
-	data_path = '../images/'
+	data_root = '../images/'
 	target_path = '../styles2.csv'
-	model_name = 'VGG'
 	shuffle = False
 	workers = 4 
 	# dataset_name = 'cifar10'
 	# data_path = '/home/z/classification_data/cifar10/'
 	in_channels = 3
-	# img_rows = 32
+	img_rows = 32
 	num_classes = 10
-	# model_name = 'VGG'
+	model_name = 'VGG'
+	gpu = False
 	# model_save_path = 'checkpoints/AlexNet_1107_09:28.ckpt'
 	
 	batch_size = 1

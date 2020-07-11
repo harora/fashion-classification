@@ -6,7 +6,7 @@ class VGG16(BasicModule):
     def __init__(self, in_channels=3, img_rows=224, num_classes=2):
         super(VGG16, self).__init__()
         self.model_name = 'VGG16'
-        self.out_rows = img_rows / 32
+        self.out_rows = int(img_rows / 32)
         self.feature = nn.Sequential(
                 nn.Conv2d(3, 64, 3, 1, 1),
                 nn.ReLU(inplace=True),
@@ -45,7 +45,7 @@ class VGG16(BasicModule):
                 nn.MaxPool2d(2, 2),
                 )
         self.classifier = nn.Sequential(
-                nn.Linear(512*self.out_rows*self.out_rows, 4096),
+                nn.Linear(int(512*self.out_rows*self.out_rows), 4096),
                 nn.ReLU(inplace=True),
                 nn.Dropout(),
                 nn.Linear(4096, 4096),
