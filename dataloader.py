@@ -80,3 +80,4 @@ class mntdataloader(object):
 			batch = self.data_iter.__next__()
 
 		return batch
+
